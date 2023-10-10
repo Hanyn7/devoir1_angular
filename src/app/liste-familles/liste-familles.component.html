@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <app-update-famille [ajout]="ajout" (familleUpdated)="familleUpdated($event)"
+          [famille]="updatedFam"></app-update-famille>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nom Famille</th>
+
+          </tr>
+        </thead>
+        <tbody *ngFor="let fam of familles">
+          <tr>
+            <td>{{fam.idFam}}</td>
+            <td>{{fam.nomFam}}</td>
+            <td><a class="btn btn-success" (click)="updateFam(fam)">Editer</a></td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

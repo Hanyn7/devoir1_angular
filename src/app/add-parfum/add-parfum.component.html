@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="text-center">
+    <h2 style="margin-bottom: 30px; margin-top: 20px;">Ajouter un Parfum </h2>
+  </div>
+  <form>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <label for="nomParfum" class="form-label">Nom Parfum</label>
+        <input type="text" [(ngModel)]="newParfum.nomParfum" id="nomParfum" name="nomParfum"
+          class="form-control form-control-lg">
+      </div>
+      <div class="col-sm-6">
+        <label for="prixParfum" class="form-label">Prix Parfum</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="number" [(ngModel)]="newParfum.prixParfum" id="prixParfum" name="prixParfum"
+            class="form-control form-control-lg">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <label for="dateCreation" class="form-label">Date création</label>
+        <input type="date" [(ngModel)]="newParfum.dateCreation" id="dateCreation" name="dateCreation"
+          class="form-control form-control-lg">
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-6">
+        <label>Famille</label>
+        <select class="form-control form-control-lg" id="idFam" name="idFam" [(ngModel)]="newIdFam">
+          <option *ngFor="let fam of familles" [value]="fam.idFam">
+            {{fam.nomFam}}
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-12">
+        <label for="logo" class="form-label mb-2">Image </label>
+        <input type="file" (change)="onImageUpload($event)" name="logo" id="logo" class="form-control">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-16 col-md-16 col-lg-16">
+        <img [src]="imagePath" class="card-img-top img-fluid rounded-start" style="width: 150px; height: 150px" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <button type="submit" (click)="addParfum()" class="btn btn-success btn-lg">Ajouter</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="text-center mt-3">
+    <h3>{{message}}</h3>
+  </div>
+</div>

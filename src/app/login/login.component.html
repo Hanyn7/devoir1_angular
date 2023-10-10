@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 ">
+      <div>
+        <img src="../assets/image/mes_im/img1.jpg" alt="Image" style="width: 450px; height: 600px; margin-left: 20px;">
+      </div>
+    </div>
+    <div class="col-md-6 " style="margin-top: 160px;">
+      <div style="border-radius: 35px; border-color: rgb(102, 168, 249);">
+        <div class="card-body">
+          <h5 class="card-title" style="text-align: center;font-size: 40px;">Login</h5>
+          <div class="alert alert-danger" *ngIf="err === 1">
+            <strong>Login ou mot de passe erronés..</strong>
+          </div>
+
+          <form>
+            <div class="form-group">
+              <label for="username">Nom Utilisateur:</label>
+              <input type="text" name="username" class="form-control" [(ngModel)]="user.username">
+            </div>
+            <div class="form-group">
+              <label for="password">Mot de passe:</label>
+              <input type="password" name="password" [(ngModel)]="user.password" class="form-control">
+            </div>
+            <div class="row justify-content-center">
+              <button type="button" (click)="onLoggedin()" class="btn btn-success">Connexion</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

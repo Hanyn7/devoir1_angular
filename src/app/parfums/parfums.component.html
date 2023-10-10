@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<body>
+
+  <div class="container">
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Id</th>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Date Création</th>
+              <th>Famille</th>
+              <th>Image</th>
+              <th> </th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let p of parfums">
+            <tr>
+              <td>{{ p.idParfum }}</td>
+              <td>{{ p.nomParfum }}</td>
+              <td>{{ p.prixParfum }}</td>
+              <td>{{ p.dateCreation | date:'dd/MM/yyyy' }}</td>
+              <td>{{ p.famille.nomFam }}</td>
+              <td>
+                <img class="card-img-top img-fluid" src="{{ apiurl+'/image/loadfromFS/'+p.idParfum }}"
+                  style="max-height: 50px; width: 100px">
+              </td>
+              <td>
+                <a *ngIf="authService.isAdmin()" (click)="supprimerParfum(p)"><i class="fas fa-trash-alt"
+                    style="color: hsl(0, 100%, 73%); font-size: 30px;"></i></a>
+              </td>
+              <td>
+                <a *ngIf="authService.isAdmin()" class="btn btn-success btn-sm"
+                  [routerLink]="['/updateParfum', p.idParfum]"><i class="fas fa-pencil-alt"
+                    style="color: #e7ffe6;"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>

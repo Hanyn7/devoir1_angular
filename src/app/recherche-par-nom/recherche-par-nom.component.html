@@ -1,0 +1,35 @@
+<div class="container">
+
+  <form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2 mt-2 ">
+      <label>Nom Parfum en tapant</label>
+      <input #nom [(ngModel)]="searchTerm" name="searchTerm" class="form-control">
+    </div>
+  </form>
+
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Date Création</th>
+            <th>Famille</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let p of parfums | filter:searchTerm ">
+          <tr>
+            <td>{{p.idParfum}}</td>
+            <td>{{p.nomParfum}}</td>
+            <td>{{p.prixParfum}}</td>
+            <td>{{p.dateCreation | date:'dd/MM/yyyy'}}</td>
+            <td>{{p.famille!.nomFam}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
