@@ -16,6 +16,11 @@ import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/token.interceptor';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AddRoleUserComponent } from './add-role-user/add-role-user.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +34,18 @@ import { TokenInterceptor } from './services/token.interceptor';
     ListeFamillesComponent,
     UpdateFamilleComponent,
     LoginComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AdminPageComponent,
+    AddRoleUserComponent,
+    SignUpComponent,
+    VerificationComponent
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     Ng2SearchPipeModule
   ],

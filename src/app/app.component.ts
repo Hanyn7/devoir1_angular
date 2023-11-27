@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'MesProduits';
+  title = 'MesParfums';
 
   constructor(public authService: AuthService,
               private router :Router){}
@@ -18,9 +18,7 @@ export class AppComponent implements OnInit {
     if (this.authService.getToken()==null || 
         this.authService.isTokenExpired())
           this.router.navigate(['/login']);
-
   }
-
   onLogout(){
     this.authService.logout();
   }

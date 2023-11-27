@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FamilleWrapper } from '../model/FamilleWrapped.model';
 import { AuthService } from './auth.service';
+import { User } from '../model/User.model';
+import { Role } from '../model/Role.model';
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
   };
@@ -19,24 +21,10 @@ export class ParfumService {
   //familles : Famille[];
   apiURL: string = 'http://localhost:8080/parfums/api';
   apiURLFam: string = 'http://localhost:8080/parfums/fam';
+  apiURLUser = 'http://localhost:8081/users';
   constructor(private http : HttpClient, private authService : AuthService) {
- /*this.familles = [ {idFam : 1, nomFam : "florale"},
-  {idFam : 2, nomFam : "oud"}];
-  this.parfums = [
-  { idParfum : 1, nomParfum : "Dior", prixParfum : 330,
-  dateCreation : new Date("12/09/2011"), famille : {idFam : 1, nomFam : "florale"}},
-  { idParfum : 2, nomParfum : "Chanel", prixParfum : 1000,
-  dateCreation : new Date("04/01/2011"), famille : {idFam : 1, nomFam : "florale"}},
-  { idParfum : 3, nomParfum : "Escandale", prixParfum : 2500,
-  dateCreation : new Date("11/02/2011"), famille : {idFam : 1, nomFam : "oud"}},];*/
 }
 
- /* listeParfum():Observable<Parfum[]> {
-    let jwt = this.authService.getToken();
-    jwt = "Bearer "+jwt;
-    let httpHeaders = new HttpHeaders({"Authorization":jwt})
-    return this.http.get<Parfum[]>(this.apiURL+"/all",{headers:httpHeaders});
-      }*/
       listeParfum(): Observable<Parfum[]>{
         return this.http.get<Parfum[]>(this.apiURL+"/all");
        }
@@ -77,18 +65,6 @@ return this.http.get<Parfum>(url,{headers:httpHeaders});
   let httpHeaders = new HttpHeaders({"Authorization":jwt})
   return this.http.put<Parfum>(this.apiURL+"/updateparf", parf, {headers:httpHeaders});}
 
-  /*trierParfums(){
-    this.parfums = this.parfums.sort((n1,n2) => {
-    if (n1.idParfum! > n2.idParfum!) {
-    return 1;
-    }
-    if (n1.idParfum! < n2.idParfum!) {
-    return -1;
-    }
-    return 0;
-    });
-    }*/
-
     listeFamilles():Observable<FamilleWrapper> {
       let jwt = this.authService.getToken();
       jwt = "Bearer "+jwt;
@@ -97,15 +73,7 @@ return this.http.get<Parfum>(url,{headers:httpHeaders});
     }
     
 
-      /*consulterFamille(id:number): Famille{
-        return this.familles.find(fam => fam.idFam == id)!;
-        }*/
-
-        /*rechercherParFamille(idFam: number):Observable< Parfum[]> {
-          const url = `${this.apiURL}/fam/prodscat/${idFam}`;
-          return this.http.get<Parfum[]>(url);
-
-          } */
+     
 
           rechercherParFamille(idFam: number): Observable<Parfum[]> {
             const url = `${this.apiURL}/fam/prodscat/${idFam}`;
@@ -169,6 +137,26 @@ return this.http.get<Parfum>(url,{headers:httpHeaders});
                     const url = `${this.apiURL + '/image/uploadFS'}/${idParf}`;
                     return this.http.post(url, imageFormData);
                     }
+
+
+
+
+                    
+                    listeUser(): Observable<User[]> {
+                      return this.http.get<User[]>(this.apiURLUser+ "/all");
+                    }
+                
+                    addUser(user: any) {
+                      return this.http.post(`${this.apiURLUser}/add`, user);
+                    }
+                
+                    getAllRoles() {
+                      return this.http.get(`${this.apiURLUser}/allRoles`);
+                    }                
+                
+                    findRoleById(id: number): Observable<Role> {
+                    const url = `${this.apiURLUser}/findRoleById/${id}`;
+                    return this.http.get<Role>(url);}
                   
 }
 

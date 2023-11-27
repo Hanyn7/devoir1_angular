@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/User.model';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs/internal/Observable';
+import { Role } from '../model/Role.model';
+import { VerificationRequest } from '../model/VerificationRequest.model'; // Assuming you have a VerificationRequest model
+import { map } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
- 
+
 
  /* users: User[] = [{"username":"admin","password":"123","roles":['ADMIN']},
   {"username":"hanin","password":"123","roles":['USER']} ];*/
@@ -28,6 +32,16 @@ constructor(private router: Router,private http : HttpClient) { }
 login(user : User)
 {
 return this.http.post<User>(this.apiURL+'/login', user , {observe:'response'});
+}
+
+registerUser(user: User): Observable<any> {
+  return this.http.post<any>(`${this.apiURL}/register`, user);
+}
+checkEmailExists(email: string) {
+  return this.http.post<any>(this.apiURL+'/check-email', { email });
+}
+handleVerification(verificationRequest: VerificationRequest): Observable<any> {
+  return this.http.post<any>(`${this.apiURL}/verify`,  verificationRequest,{observe:'response'})
 }
 saveToken(jwt:string){
   localStorage.setItem('jwt',jwt);
@@ -64,22 +78,9 @@ logout() {
 isTokenExpired(): Boolean
 {
 return this.helper.isTokenExpired(this.token); }
-/*SignIn(user :User):Boolean{
-let validUser: Boolean = false;
-this.users.forEach((curUser) => {
-if(user.username== curUser.username && user.password==curUser.password) {
-validUser = true;
-this.loggedUser = curUser.username;
-this.isloggedIn = true;
-this.roles = curUser.roles;
-localStorage.setItem('loggedUser',this.loggedUser);
-localStorage.setItem('isloggedIn',String(this.isloggedIn));
-}
-});
-return validUser;
-}*/
+
 isAdmin():Boolean{
-if (!this.roles) //this.roles== undefiened
+if (!this.roles) 
 return false;
 return (this.roles.indexOf('ADMIN') >-1);
 }
@@ -88,12 +89,44 @@ setLoggedUserFromLocalStorage(login : string) {
   this.isloggedIn = true;
   //this.getUserRoles(login);
   }
-  /*getUserRoles(username :string){
-  this.users.forEach((curUser) => {
-  if( curUser.username == username ) {
-  this.roles = curUser.roles;
-  }
-  });
-  }*/
+
+
+
+
+  deleteUser(id: number) {
+    let jwt=this.getToken();
+    jwt="Bearer "+jwt;
+    let httpHeaders=new HttpHeaders({"Authorization":jwt})
+    const url=`${this.apiURL}/deleteUserById/${id}`
+    return this.http.delete(url,{headers:httpHeaders});
+    }
+
+    AddRoleForUser(id:number,r:Role):Observable<User>
+    {
+      let jwt = this.getToken();
+      jwt = "Bearer "+jwt;
+      let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      const url=`${this.apiURL}/addRole/${id}`
+      return this.http.post<User>(url,r, {headers:httpHeaders});
+
+    }
+
+    removeRoleFromUser(id:number,r:Role):Observable<User>
+    {
+      let jwt = this.getToken();
+      jwt = "Bearer "+jwt;
+      let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      const url=`${this.apiURL}/removeRoleFromUer/${id}`
+      return this.http.post<User>(url,r, {headers:httpHeaders});
+
+    }
+
+    consulterUser(id: number): Observable<User> {
+      let jwt = this.getToken();
+      jwt = "Bearer "+jwt;
+      let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      const url = `${this.apiURL + '/findUserById'}/${id}`;
+      return this.http.get<User>(url,{headers:httpHeaders});
+      }
 
 }

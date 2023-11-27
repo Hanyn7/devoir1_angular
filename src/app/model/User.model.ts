@@ -1,6 +1,9 @@
-export class User{
-  username!:string ;
-  password !: string ;
-  roles!:string[];
-  }
-  
+import { Role } from "./Role.model";
+
+export class User {
+  user_id!: number;
+  username!: string;
+  password!: string;
+  email!:string;
+  roles!: Role[];
+}

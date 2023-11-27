@@ -61,6 +61,5 @@ this.parfums = parfs;
       this.chargerParfums();
       });
       }
-    
         }
 
